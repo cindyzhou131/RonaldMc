@@ -13,7 +13,7 @@ class MenuBar: NSObject {
     let whatview1 = UIView()
     let wherebutton1 = UIButton()
     let whybutton1 = UIButton()
-    
+    var menuSections = ["nyc", "ldsca", "paris"]
     
     var donateButton = UIButton()
     
@@ -40,8 +40,8 @@ class MenuBar: NSObject {
         
     }
 
-    
-    func showMenu(){
+    func create(){
+        print("CREATED")
         
         if let window = UIApplication.shared.keyWindow{
             
@@ -50,67 +50,39 @@ class MenuBar: NSObject {
             
             // superView.addSubview(menu!)
             let screensize = UIScreen.main.bounds
-           // menuTable.translatesAutoresizingMaskIntoConstraints = false
-/******* vvvvv GOTTA FIX THE SHIT vvvvv ******/
+            // menuTable.translatesAutoresizingMaskIntoConstraints = false
             /** first it doesn't respond to touch****/
             /***** miniview ****/
-            buttonSectionPlace.setUp(["nyc", "la", "paris"])
-            buttonSectionPlace.frame = CGRect(x: screensize.minX, y: screensize.minY + 20 , width: menu!.frame.width / 1.3, height: 3 * buttonSectionPlace.sectionButtons[0].frame.height)
+            buttonSectionPlace.setUp(menuSections)
+           
+            buttonSectionPlace.frame = CGRect(x: screensize.minX, y: screensize.minY + 20 , width: menu!.frame.width / 1.3, height: CGFloat(menuSections.count * buttonSectionPlace.buttonHeight))
             //addMenuSectionButton()
-//            buttonSectionPlace.frame = CGRect(x: 0, y: 0, width: screensize.width/3, height: whybutton.frame.height + wherebutton.frame.height)
-
+            //            buttonSectionPlace.frame = CGRect(x: 0, y: 0, width: screensize.width/3, height: whybutton.frame.height + wherebutton.frame.height)
+            
             /////**** so you have to provide the frame size with the correct height or the section wont display the right size ***///
-
-            window.addSubview(menu!)
-
+            
+            
+            
             //THE VIEWS MUST NOT THE CONNECTED LIKE IT CAN'T BE
             // menuTable.setUp(["Home", "What", "Fam"],[whatview, whatview, whatview], screensize) //CAUSE TAHT MEANS TAHT THE THEY SHARING THE SAME OBJECT AND THAT FUCKS THIGNS UP
             if menuTable == nil{
                 menuTable = BaseView()
                 menuTable?.setUp(menuTitles,menuExtensions, screensize) //////this should be called once or itll throw error
             }
-            
-            //window.translatesAutoresizingMaskIntoConstraints = false
-        /**** CONSTRAINTS *****/
-            /*** menu Constraints ****/
-            menu!.translatesAutoresizingMaskIntoConstraints = false
-            menu!.topAnchor.constraint(equalTo: window.topAnchor).isActive = true
-            menu!.bottomAnchor.constraint(equalTo: window.bottomAnchor).isActive = true
-            menu!.widthAnchor.constraint(equalTo: window.widthAnchor).isActive = true
-
-            /*** menuTableFrame Constraints ****/
             menuTableFrame.backgroundColor = UIColor(red: 1, green: 245/255, blue: 238/255, alpha: 0.7)
+            //window.translatesAutoresizingMaskIntoConstraints = false
             
-            menuTableFrame.translatesAutoresizingMaskIntoConstraints = false
-            menu!.addSubview(menuTableFrame)
-
-            menuTableFrame.topAnchor.constraint(equalTo: (menu?.topAnchor)!, constant: 20).isActive = true
-             menuTableFrame.bottomAnchor.constraint(equalTo: (menu?.bottomAnchor)!).isActive = true
-            menuTableFrame.widthAnchor.constraint(equalTo: (menu?.widthAnchor)!, multiplier: 1/1.3).isActive = true
-            menuTableFrame.leadingAnchor.constraint(equalTo: (menu?.leadingAnchor)!).isActive = true
+            // menuTable.bottomAnchor.constraint(equalTo: (window.bottomAnchor)).isActive = true // this will throw an error
+            // menuTable.backgroundColor = UIColor(red: 1, green: 245/255, blue: 238/255, alpha: 0.7)
             
-            menuTableFrame.addSubview(menuTable!)
-            
-            /*** menuTable Constraints ****/
-            menuTable?.translatesAutoresizingMaskIntoConstraints = false
-            menuTable?.topAnchor.constraint(equalTo: (menuTableFrame.topAnchor)).isActive = true
-         
-            menuTable?.widthAnchor.constraint(equalTo: (menuTableFrame.widthAnchor)).isActive = true
-            menuTable?.leadingAnchor.constraint(equalTo: (menuTableFrame.leadingAnchor)).isActive = true
-        /**** CONSTRAINTS END *****/
-            
-      
-           // menuTable.bottomAnchor.constraint(equalTo: (window.bottomAnchor)).isActive = true // this will throw an error
-           // menuTable.backgroundColor = UIColor(red: 1, green: 245/255, blue: 238/255, alpha: 0.7)
-        
             
             //let tableWidth = menu.frame / 4.0
-          //  menuTable.frame = CGRect(x: screensize.minX, y: screensize.minY + 20 , width: menu!.frame.width / 1.3, height: menu!.frame.height)
+            //  menuTable.frame = CGRect(x: screensize.minX, y: screensize.minY + 20 , width: menu!.frame.width / 1.3, height: menu!.frame.height)
             
             //print(screensize)
             
-          
-
+            
+            
             // blank.backgroundColor = UIColor.white
             // menu?.addSubview(blank)
             //blank.topAnchor.constraint(equalTo: menuTable.bottomAnchor).isActive = true
@@ -119,8 +91,8 @@ class MenuBar: NSObject {
             swipe.direction = UISwipeGestureRecognizerDirection.left
             self.menu!.addGestureRecognizer(swipe)
             ///////testing button touch
-            
-            wherebutton1.backgroundColor = .red
+           /*
+          //  wherebutton1.backgroundColor = .red
             whybutton1.backgroundColor = .purple
             
             wherebutton1.setTitle("what", for: .normal)
@@ -130,11 +102,11 @@ class MenuBar: NSObject {
             wherebutton1.translatesAutoresizingMaskIntoConstraints = false
             whybutton1.translatesAutoresizingMaskIntoConstraints = false
             
-           // whatview1.isUserInteractionEnabled = false
+            // whatview1.isUserInteractionEnabled = false
             whatview1.addSubview(whybutton1)
             whatview1.addSubview(wherebutton1)
-           // whybutton1.addTarget(self, action: #selector(self.printTitle(_:)), for: .touchUpInside)
-           // wherebutton1.addTarget(wherebutton1, action: #selector(self.printTitle(_:)), for: .touchUpInside)
+            // whybutton1.addTarget(self, action: #selector(self.printTitle(_:)), for: .touchUpInside)
+            // wherebutton1.addTarget(wherebutton1, action: #selector(self.printTitle(_:)), for: .touchUpInside)
             whybutton1.widthAnchor.constraint(equalTo: whatview1.widthAnchor).isActive = true
             whybutton1.heightAnchor.constraint(equalTo: whatview1.heightAnchor, constant: 0.5).isActive = true
             whybutton1.topAnchor.constraint(equalTo: whatview1.topAnchor).isActive = true
@@ -144,41 +116,77 @@ class MenuBar: NSObject {
             wherebutton1.bottomAnchor.constraint(equalTo: wherebutton1.topAnchor, constant: 100).isActive = true
             wherebutton1.widthAnchor.constraint(equalTo: whatview1.widthAnchor).isActive = true
             wherebutton1.heightAnchor.constraint(equalTo: whatview1.heightAnchor, constant: 0.5).isActive = true
-
+            
             wherebutton1.leadingAnchor.constraint(equalTo: whatview1.leadingAnchor).isActive = true
-
-            
-//            wherebutton1.frame.size.width = 300
-//            wherebutton1.frame.size.height = 300
-//            whybutton1.frame.size.height = 300
-//            whybutton1.frame.size.width = 300
-            
-          //  whatview1.frame = CGRect(x: 0, y: 0, width: screensize.width, height: screensize.height)
             
             
-//            wherebutton1.isUserInteractionEnabled = true
-//            whybutton1.isUserInteractionEnabled = true
-//            //window.isUserInteractionEnabled = false
+            //            wherebutton1.frame.size.width = 300
+            //            wherebutton1.frame.size.height = 300
+            //            whybutton1.frame.size.height = 300
+            //            whybutton1.frame.size.width = 300
+            
+            //  whatview1.frame = CGRect(x: 0, y: 0, width: screensize.width, height: screensize.height)
+            
+            
+            //            wherebutton1.isUserInteractionEnabled = true
+            //            whybutton1.isUserInteractionEnabled = true
+            //            //window.isUserInteractionEnabled = false
             whatview1.clipsToBounds = true
-
-         //   window.addSubview(whatview1)
             
-//            whatview1.leadingAnchor.constraint(equalTo: window.leadingAnchor).isActive = true
-//            whatview1.widthAnchor.constraint(equalTo: window.widthAnchor).isActive = true
-//            print(window.clipsToBounds)
-//
-            ///////testing ends
+            //   window.addSubview(whatview1)
+            
+            //            whatview1.leadingAnchor.constraint(equalTo: window.leadingAnchor).isActive = true
+            //            whatview1.widthAnchor.constraint(equalTo: window.widthAnchor).isActive = true
+            //            print(window.clipsToBounds)
+            //
+            ///////testing ends */
             donateButton.translatesAutoresizingMaskIntoConstraints = false
             donateButton.backgroundColor = .red
             donateButton.setTitle("DONATE YOUR MONEY", for: .normal)
             window.addSubview(donateButton)
-
+            
             donateButton.bottomAnchor.constraint(equalTo: window.bottomAnchor, constant: -20).isActive = true
             donateButton.rightAnchor.constraint(equalTo: window.rightAnchor).isActive = true
             
+            
+        }
+
+        
+    }
+    
+    func showMenu(){
+        if let window = UIApplication.shared.keyWindow{
+            window.addSubview(menu!)
+            /**** CONSTRAINTS *****/
+            /*** menu Constraints ****/
+            menu!.translatesAutoresizingMaskIntoConstraints = false
+            menu!.topAnchor.constraint(equalTo: window.topAnchor).isActive = true
+            menu!.bottomAnchor.constraint(equalTo: window.bottomAnchor).isActive = true
+            menu!.widthAnchor.constraint(equalTo: window.widthAnchor).isActive = true
+            
+            /*** menuTableFrame Constraints ****/
+
+            
+            menuTableFrame.translatesAutoresizingMaskIntoConstraints = false
+            menu!.addSubview(menuTableFrame)
+            
+            menuTableFrame.topAnchor.constraint(equalTo: (menu?.topAnchor)!, constant: 20).isActive = true
+            menuTableFrame.bottomAnchor.constraint(equalTo: (menu?.bottomAnchor)!).isActive = true
+            menuTableFrame.widthAnchor.constraint(equalTo: (menu?.widthAnchor)!, multiplier: 1/1.3).isActive = true
+            menuTableFrame.leadingAnchor.constraint(equalTo: (menu?.leadingAnchor)!).isActive = true
+            
+            menuTableFrame.addSubview(menuTable!)
+            
+            /*** menuTable Constraints ****/
+            menuTable?.translatesAutoresizingMaskIntoConstraints = false
+            menuTable?.topAnchor.constraint(equalTo: (menuTableFrame.topAnchor)).isActive = true
+            
+            menuTable?.widthAnchor.constraint(equalTo: (menuTableFrame.widthAnchor)).isActive = true
+            menuTable?.leadingAnchor.constraint(equalTo: (menuTableFrame.leadingAnchor)).isActive = true
+            /**** CONSTRAINTS END *****/
+            
 
         }
-        
         
     }
   
@@ -190,7 +198,7 @@ class MenuBar: NSObject {
             /// print("it reco")
             //            self.menu.frame.size.height -= 10
             //            self.menu.frame.size.height -= 10
-            self.menu!.backgroundColor = UIColor(white: 1, alpha: 1)
+          //  self.menu!.backgroundColor = UIColor(white: 1, alpha: 1)
             self.menu!.removeFromSuperview()
             //   self.menu.frame = CGRect(x: 0, y: 0, width: 0, height: 0)
             //   self.menuTable.frame = CGRect(x: 0, y: 0, width: 0, height: 0)
@@ -249,6 +257,7 @@ class MenuBar: NSObject {
 class ButtonSection: UIView{
     var sectionButtons: [UIButton] = []
     var delegate: MainMenuViewController?
+    var buttonHeight = 0
     
     func setUp(_ buttonTitles:[String]){
         for title in buttonTitles{
@@ -258,6 +267,7 @@ class ButtonSection: UIView{
             newbutton.translatesAutoresizingMaskIntoConstraints = false
             sectionButtons.append(newbutton)
             self.addSubview(newbutton)
+
         }
         for i in 0 ... sectionButtons.count - 1{
             let button = sectionButtons[i]
@@ -275,6 +285,8 @@ class ButtonSection: UIView{
                  button.bottomAnchor.constraint(equalTo: sectionButtons[i + 1].topAnchor).isActive = true
             }
             button.sizeToFit()
+            buttonHeight = Int(button.frame.height)
+
         }
        // self.frame.size =
         self.clipsToBounds = true
@@ -286,11 +298,14 @@ class ButtonSection: UIView{
             button.addTarget(self, action: #selector(delegate?.printer), for: .touchUpInside)
         }
     }
- 
-    
-    
-    
 }
+
+
+
+
+
+
+
 
 class SimpleBackgoundView: UIView{
     

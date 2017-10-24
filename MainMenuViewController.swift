@@ -20,6 +20,7 @@ class MainMenuViewController: UIViewController, UINavigationBarDelegate {
     var inView: MainMenuView! = MainMenuView()
     var familyView = UIView()
     var otherview = UIView()
+        var menuSection = ["somthing", "somethingelse"]
     //var currentview: UIView?
     
     var nextPage: String?{
@@ -60,13 +61,13 @@ class MainMenuViewController: UIViewController, UINavigationBarDelegate {
         
         //if inView as? theRealMenuHopefully {
         inView.setUp()
-        menu.showMenu()
+        menu.create()
         menu.menuTable!.delegate = self
         menu.buttonSectionPlace.delegate = self
 
         view = (inView)
-        menu.whybutton.addTarget(self, action: #selector(printer), for: .touchUpInside)
-        menu.wherebutton.addTarget(self, action: #selector(printer), for: .touchUpInside)
+      //  menu.whybutton.addTarget(self, action: #selector(printer), for: .touchUpInside)
+      //  menu.wherebutton.addTarget(self, action: #selector(printer), for: .touchUpInside)
         menu.donateButton.addTarget(self, action: #selector(goDonate), for: .touchUpInside)
         
         
